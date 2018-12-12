@@ -27,7 +27,7 @@ public class PGNParseTest {
         }
 
         File file = new File("/Users/yaodonglv/Desktop/XQS文档/test6.pgn");
-        File file2 = new File("/Users/yaodonglv/Desktop/XQS文档/test.pgn");
+        File file2 = new File("/Users/yaodonglv/Desktop/XQS文档/test10.pgn");
         URL url = new URL("http://127.0.0.1:8080/test.pgn");
         PgnToCmdByte.isDebug = true;
         File file1 = Pgn2CmdGZip.parsePgn(file2, "/Users/yaodonglv/Desktop/XQS文档/", "pgnData");
