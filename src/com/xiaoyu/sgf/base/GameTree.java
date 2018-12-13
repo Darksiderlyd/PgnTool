@@ -33,7 +33,15 @@ public interface GameTree {
 	boolean last();
 	void rewind();
 	
-	public void addMove(Move move);
-	public void addMove(String move);
+	void addMove(Move move);
+	void addMove(String move);
+
+	String getGameName();
+
+	void setGameName(String gameName);
+
+	String getGameEvent();
+
+	void setGameEvent(String gameEvent);
 	
 }

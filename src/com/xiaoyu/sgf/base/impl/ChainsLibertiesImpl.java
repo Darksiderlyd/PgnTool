@@ -6,14 +6,9 @@ import java.util.Arrays;
 
 
 /**
- * 
- * 
  * Nice array cached structure. Seems to be efficient.
  * Needs to implement binary search in array elements. 
  * Adding a group of liberties is not efficient, have O(n) for checking repeated liberties
- * 
- * @author esabb
- *
  */
 
 public class ChainsLibertiesImpl implements ChainsLiberties {

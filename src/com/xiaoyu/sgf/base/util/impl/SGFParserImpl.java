@@ -25,7 +25,7 @@ public class SGFParserImpl implements SGFParser {
         // move
         char letter = move.charAt(0);
         char numba = move.charAt(1);
-        return new MoveImpl(letter - 65, boardSize - 1 - (numba - 65), player);
+        return new MoveImpl(letter - 65, numba - 65, player);
     }
 
     private String writeSGFMove(Move move, int boardSize) {
@@ -35,7 +35,7 @@ public class SGFParserImpl implements SGFParser {
         int x = move.getX();
         int y = move.getY();
         char letter = (char) (x + 97);
-        char numba = (char) (boardSize + 96 - y);
+        char numba = (char) (y + 97);
         return PC + "[" + letter + numba + "]";
 /*		v = boardSize-1-(numba-65)
 		v - boardsize + 1 = -numba+65
@@ -106,8 +106,11 @@ public class SGFParserImpl implements SGFParser {
 //		else if ("DT".equals(cmd) || "DaTe".equals(cmd)) {  // DT: Date
 //			// do nothing.
 //		}
-        else if ("SZ".equals(cmd) || "SiZe".equals(cmd)) {  // SZ: Board Size
-            gt.setBoardSize(Integer.parseInt(params));
+        else if ("SZ".equals(cmd) || "SiZe".equals(cmd)) {  // SZ: Board Size ,default SiZe 19
+            int size = Integer.parseInt(params);
+            if (size == 9 || size == 13 || size == 19) {
+                gt.setBoardSize(size);
+            }
         } else if ("KM".equals(cmd) || "KoMi".equals(cmd)) {  // KM: Komi
             try {
                 gt.setKomi(Float.parseFloat(params));
@@ -133,13 +136,19 @@ public class SGFParserImpl implements SGFParser {
 //		else if ("VW".equals(cmd) || "VieW".equals(cmd)) {  // VW: View ( ?? )
 //			// pass
 //		}
-//		else if ("EV".equals(cmd) || "EVent".equals(cmd)) {  // EV: Event
-//			// pass
-//		}
-//		else if ("GN".equals(cmd) || "GameName".equals(cmd)) {  // GN: Game Name
-//			// pass
-//		}
-        else {
+        else if ("EV".equals(cmd) || "EVent".equals(cmd)) {  // EV: Event
+            if (null == params || params.length() == 0) {
+                gt.setGameEvent("赛事");
+            } else {
+                gt.setGameEvent(params);
+            }
+        } else if ("GN".equals(cmd) || "GameName".equals(cmd)) {  // GN: Game Name
+            if (null == params || params.length() == 0) {
+                gt.setGameName("Sgf棋谱");
+            } else {
+                gt.setGameName(params);
+            }
+        } else {
             //System.err.println("Unrecognized SGF command: " + cmd + "["+params+"]");
         }
         return stack;
@@ -238,7 +247,6 @@ public class SGFParserImpl implements SGFParser {
     }
 
     private void writeRec(GameTree gt, Writer data) throws IOException {
-
         Move move = gt.getMove();
         if (move != null)
             data.append(";" + writeSGFMove(move, gt.getBoardSize()));

@@ -2,11 +2,13 @@ package com.xiaoyu.pgn;
 
 import com.xiaoyu.pgn.pgncmdtool.PgnToCmdByte;
 import com.xiaoyu.pgn.pgntool.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
+
 /**
  * @Author: lyd
  * @Date: 2018/12/7 下午2:56
@@ -35,7 +37,7 @@ public class Pgn2CmdGZip extends PgnToCmdByte {
         PGNSource source = new PGNSource(url);
         List<PGNGame> pgnGames = source.listGames();
         PGNGame pgnGame = pgnGames.get(0);
-        return processPgnAndGetGzFile(pgnGame,filePath,fileName);
+        return processPgnAndGetGzFile(pgnGame, filePath, fileName);
     }
 
     //String解析
@@ -47,7 +49,7 @@ public class Pgn2CmdGZip extends PgnToCmdByte {
         PGNSource source = new PGNSource(pgn);
         List<PGNGame> pgnGames = source.listGames();
         PGNGame pgnGame = pgnGames.get(0);
-        return processPgnAndGetGzFile(pgnGame,filePath,fileName);
+        return processPgnAndGetGzFile(pgnGame, filePath, fileName);
     }
 
     //InputStream解析
@@ -59,7 +61,7 @@ public class Pgn2CmdGZip extends PgnToCmdByte {
         PGNSource source = new PGNSource(pgnInputStream);
         List<PGNGame> pgnGames = source.listGames();
         PGNGame pgnGame = pgnGames.get(0);
-        return processPgnAndGetGzFile(pgnGame,filePath,fileName);
+        return processPgnAndGetGzFile(pgnGame, filePath, fileName);
     }
 
 }

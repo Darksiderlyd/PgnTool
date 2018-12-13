@@ -1,5 +1,7 @@
 package com.xiaoyu.common.model;
 
+import com.xiaoyu.sgf.base.Board;
+
 /**
  * @Author: lyd
  * @Date: 2018/12/7 下午2:56
@@ -50,6 +52,24 @@ public enum ChessType {
         }
         return null;
     }
+
+    /**
+     * 只给围棋使用
+     * @param lineNum
+     * @return
+     */
+    public static ChessType getWeiqiTypeByLineNum(int lineNum) {
+        switch (lineNum) {
+            case Board.SIZE_9:
+                return Mode_Weiqi_9x9;
+            case Board.SIZE_13:
+                return Mode_Weiqi_13x13;
+            case Board.SIZE_19:
+                return Mode_Weiqi_19x19;
+        }
+        return Mode_Weiqi_19x19;
+    }
+
 
 
 }

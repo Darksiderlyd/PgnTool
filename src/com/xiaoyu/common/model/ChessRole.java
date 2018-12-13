@@ -2,6 +2,8 @@ package com.xiaoyu.common.model;
 
 import com.xiaoyu.pgn.pgntool.Color;
 import com.xiaoyu.pgn.pgntool.PGNParser;
+import com.xiaoyu.sgf.base.Board;
+
 /**
  * @Author: lyd
  * @Date: 2018/12/7 下午2:56
@@ -130,7 +132,7 @@ public enum ChessRole {
         return role <= 5 ? roles[role] : roles[role - 10];
     }
 
-    //吧引擎棋子角色转换为我们的棋子角色
+    //把引擎棋子角色转换为我们的国际象棋棋子角色
     public static ChessRole fromParserRoleToChessRole(String engineRole, Color color) {
         if (engineRole.startsWith(PGNParser.PAWN)) {
             return color == Color.white ? Chess_Role_White_Pawn : Chess_Role_Black_Pawn;
@@ -147,6 +149,11 @@ public enum ChessRole {
         } else {
             return color == Color.white ? Chess_Role_White_Pawn : Chess_Role_Black_Pawn;
         }
+    }
+
+    //把引擎棋子角色转换为我们的围棋棋子角色
+    public static ChessRole fromParserRoleToWeiqiRole(int color) {
+        return color == Board.BLACK ? Weiqi_Role_Black : Weiqi_Role_White;
     }
 
 
