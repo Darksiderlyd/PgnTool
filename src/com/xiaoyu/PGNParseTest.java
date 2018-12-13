@@ -1,8 +1,9 @@
 package com.xiaoyu;
 
-import com.xiaoyu.pgncmdtool.PgnToCmdByte;
-import com.xiaoyu.pgntool.MalformedMoveException;
-import com.xiaoyu.pgntool.PGNParseException;
+import com.xiaoyu.pgn.Pgn2CmdGZip;
+import com.xiaoyu.pgn.pgncmdtool.PgnToCmdByte;
+import com.xiaoyu.pgn.pgntool.MalformedMoveException;
+import com.xiaoyu.pgn.pgntool.PGNParseException;
 
 import java.io.File;
 import java.io.IOException;
