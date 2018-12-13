@@ -12,7 +12,7 @@ import java.net.URL;
 /**
  * PGN test 1.0.0
  */
-public class PGNParseTest {
+public class ParseTest {
 
     /**
      * @param args

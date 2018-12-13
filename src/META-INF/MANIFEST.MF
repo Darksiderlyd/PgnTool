@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
 Class-Path: fastjson-1.2.54.jar okio-1.14.0.jar
-Main-Class: com.xiaoyu.PGNParseTest
+Main-Class: com.xiaoyu.ParseTest
 
