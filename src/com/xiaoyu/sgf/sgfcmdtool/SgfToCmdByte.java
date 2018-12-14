@@ -4,8 +4,10 @@ import com.xiaoyu.common.cmdtool.CmdDataOrFileProcess;
 import com.xiaoyu.common.cmdtool.cmd.TeaMoveChessCmd;
 import com.xiaoyu.common.cmdtool.cmd.TeaNewGameBoardExtensionCmd;
 import com.xiaoyu.common.cmdtool.cmd.base.IRtsCmd;
+import com.xiaoyu.common.utils.StringUtils;
 import com.xiaoyu.model.ChessRole;
 import com.xiaoyu.model.ChessType;
+import com.xiaoyu.model.GameDataModel;
 import com.xiaoyu.sgf.base.GameTree;
 import com.xiaoyu.sgf.base.Move;
 
@@ -24,26 +26,38 @@ public class SgfToCmdByte {
 
     private static final String tag = "XYSGFToCmdByte";
 
-    protected static File processSgfAndGetGzFile(GameTree gameTree, String filePath, String fileName) {
-        File gzFile = CmdDataOrFileProcess.getFile(filePath, fileName, processSgf(gameTree), tag);
+
+    protected static File processSgfAndGetGzFile(GameTree gameTree, String filePath, String fileName, String name) {
+        File gzFile = CmdDataOrFileProcess.getFile(filePath, fileName, processSgfAndGetBytes(gameTree,name).getPgnDatas(), tag);
         if (gzFile == null) return null;
         return gzFile;
     }
 
-    protected static byte[] processSgfAndGetBytes(GameTree gameTree) {
-        return processSgf(gameTree);
+    protected static File processSgfAndGetGzFile(GameTree gameTree, String filePath, String fileName) {
+        File gzFile = CmdDataOrFileProcess.getFile(filePath, fileName, processSgfAndGetBytes(gameTree).getPgnDatas(), tag);
+        if (gzFile == null) return null;
+        return gzFile;
     }
 
-    private static byte[] processSgf(GameTree gameTree) {
+    //有文件名
+    protected static GameDataModel processSgfAndGetBytes(GameTree gameTree) {
         String name = "Sgf棋局";
-        List<IRtsCmd> cmds = new ArrayList<>();
-        if (isDebug) System.out.println("############################");
-
         String gameName = gameTree.getGameName();
-
-        if (gameName != null && gameName.length() > 0) {
+        if (StringUtils.isEmpty(gameName)) {
             name = gameName;
         }
+        return new GameDataModel(processSgf(gameTree, name), name, 0);
+    }
+
+    //无文件名
+    protected static GameDataModel processSgfAndGetBytes(GameTree gameTree, String name) {
+        name = name + "1";
+        return new GameDataModel(processSgf(gameTree, name), name, 0);
+    }
+
+    private static byte[] processSgf(GameTree gameTree, String name) {
+        List<IRtsCmd> cmds = new ArrayList<>();
+        if (isDebug) System.out.println("############################");
 
         int count = 1;
         while (!gameTree.last()) {
@@ -76,7 +90,7 @@ public class SgfToCmdByte {
         }
         //处理命令
         String data = CmdDataOrFileProcess.processCmds(cmds, isDebug);
-        if (data == null || data.length() == 0) {
+        if (StringUtils.isEmpty(data)) {
             return null;
         }
         //插入时间 + 包长 + data

@@ -16,7 +16,15 @@ import java.net.URL;
  */
 public class SGF2CmdGZip extends SgfToCmdByte {
 
-    //文件解析
+    /**
+     * 文件解析 有文件名
+     *
+     * @param file     文件
+     * @param filePath 要存储的文件路径 不包括文件
+     * @param fileName 文件名
+     * @return
+     * @throws IOException
+     */
     public static File parseSgf(File file, String filePath, String fileName) throws IOException {
         if (file == null || !file.exists()) {
             System.out.println("File does not exist!");
@@ -27,7 +35,7 @@ public class SGF2CmdGZip extends SgfToCmdByte {
         return processSgfAndGetGzFile(gameTree, filePath, fileName);
     }
 
-    //Url解析
+    //Url解析 无文件名
     public static File parseSgf(URL url, String filePath, String fileName) throws IOException {
         if (url == null) {
             System.out.println("File does not exist!");
@@ -38,7 +46,7 @@ public class SGF2CmdGZip extends SgfToCmdByte {
         return processSgfAndGetGzFile(gameTree, filePath, fileName);
     }
 
-    //String解析
+    //String解析 有文件名
     public static File parseSgf(String pgn, String filePath, String fileName) {
         if (pgn == null || pgn.length() == 0) {
             System.out.println("File does not exist!");
@@ -49,7 +57,7 @@ public class SGF2CmdGZip extends SgfToCmdByte {
         return processSgfAndGetGzFile(gameTree, filePath, fileName);
     }
 
-    //InputStream解析
+    //InputStream解析 无文件名
     public static File parseSgf(InputStream pgnInputStream, String filePath, String fileName) throws IOException {
         if (pgnInputStream == null) {
             System.out.println("File does not exist!");

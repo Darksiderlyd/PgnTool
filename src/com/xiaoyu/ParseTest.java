@@ -1,14 +1,13 @@
 package com.xiaoyu;
 
 import com.xiaoyu.common.Config;
-import com.xiaoyu.pgn.Pgn2CmdGZip;
 import com.xiaoyu.pgn.pgntool.MalformedMoveException;
 import com.xiaoyu.pgn.pgntool.PGNParseException;
+import com.xiaoyu.sgf.SGF2CmdGZip;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 
 /**
  * PGN test 1.0.0
@@ -31,22 +30,28 @@ public class ParseTest {
 //        System.out.println(ChessType.getWeiqiTypeByLineNum(Board.SIZE_9).getCode());
 
         //###===============PGN Test===================
-        File file = new File("/Users/yaodonglv/Desktop/XQS文档/test6.pgn");
-        File file2 = new File("/Users/yaodonglv/Desktop/XQS文档/test.pgn");
-        File file3 = new File("/Users/yaodonglv/Desktop/XQS文档/test9.pgn");
-        URL url = new URL("http://127.0.0.1:8080/test.pgn");
-        Config.isDebug = true;
-        List<File> files = Pgn2CmdGZip.parsePgn(file3, "/Users/yaodonglv/Desktop/XQS文档/", "pgnData");
+//        File file = new File("/Users/yaodonglv/Desktop/XQS文档/test6.pgn");
+//        File file2 = new File("/Users/yaodonglv/Desktop/XQS文档/test.pgn");
+//        File file3 = new File("/Users/yaodonglv/Desktop/XQS文档/test9.pgn");
+//        URL url = new URL("http://127.0.0.1:8080/test.pgn");
+//
+//        String path = url.getPath();
+//        int index1 = path.lastIndexOf("/");
+//        int index2 = path.lastIndexOf(".");
+//        String substring = path.substring(index1 + 1,index2);
+//
+//        Config.isDebug = true;
+//        List<File> files = Pgn2CmdGZip.parsePgn(file3, "/Users/yaodonglv/Desktop/XQS文档/", "pgnData");
 
-//        List<PgnGameDataModel> models = Pgn2Bytes.parsePgn(file3);
+//        List<GameDataModel> models = Pgn2Bytes.parsePgn(file3);
 
 
         //###===============SGF Test===================
-//        File file = new File("/Users/yaodonglv/Desktop/XQS文档/sgftest1.sgf");
-//        File file2 = new File("/Users/yaodonglv/Desktop/XQS文档/sgftest2.sgf");
-//        URL url = new URL("http://127.0.0.1:8080/sgftest.sgf");
-//        Config.isDebug = true;
-//        SGF2CmdGZip.parseSgf(file2, "/Users/yaodonglv/Desktop/XQS文档/", "sgfData");
+        File file = new File("/Users/yaodonglv/Desktop/XQS文档/sgftest1.sgf");
+        File file2 = new File("/Users/yaodonglv/Desktop/XQS文档/sgftest2.sgf");
+        URL url = new URL("http://127.0.0.1:8080/sgftest.sgf");
+        Config.isDebug = true;
+        SGF2CmdGZip.parseSgf(file2, "/Users/yaodonglv/Desktop/XQS文档/", "sgfData");
 
 
 //        SGFSource sgfSource = new SGFSource(file);

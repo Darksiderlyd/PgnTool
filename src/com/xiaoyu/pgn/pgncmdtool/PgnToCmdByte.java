@@ -4,9 +4,10 @@ import com.xiaoyu.common.cmdtool.cmd.TeaMoveChessCmd;
 import com.xiaoyu.common.cmdtool.CmdDataOrFileProcess;
 import com.xiaoyu.common.cmdtool.cmd.TeaNewGameBoardExtensionCmd;
 import com.xiaoyu.common.cmdtool.cmd.base.IRtsCmd;
+import com.xiaoyu.common.utils.StringUtils;
 import com.xiaoyu.model.ChessRole;
 import com.xiaoyu.model.ChessType;
-import com.xiaoyu.model.PgnGameDataModel;
+import com.xiaoyu.model.GameDataModel;
 import com.xiaoyu.pgn.pgntool.*;
 
 import java.io.File;
@@ -27,20 +28,33 @@ public class PgnToCmdByte {
 
 
     protected static List<File> processPgnAndGetGzFile(List<PGNGame> pgnGames, String filePath, String fileName) {
-        List<PgnGameDataModel> pgnGameDataModels = processPgnAndGetBytes(pgnGames);
+        List<GameDataModel> gameDataModels = processPgnAndGetBytes(pgnGames);
         List<File> gzfileList = new ArrayList<>();
-        for (int i = 0; i < pgnGameDataModels.size(); i++) {
-            PgnGameDataModel pgnGameDataModel = pgnGameDataModels.get(i);
+        for (int i = 0; i < gameDataModels.size(); i++) {
+            GameDataModel gameDataModel = gameDataModels.get(i);
             //{fileName}_{gameName}最终的文件名称
-            String newFileName = fileName + "_" + pgnGameDataModel.getGameName();
-            gzfileList.add(CmdDataOrFileProcess.getFile(filePath, newFileName, pgnGameDataModel.getPgnDatas(), tag));
+            String newFileName = fileName + "_" + gameDataModel.getGameName();
+            gzfileList.add(CmdDataOrFileProcess.getFile(filePath, newFileName, gameDataModel.getPgnDatas(), tag));
         }
         return gzfileList;
     }
 
-    protected static List<PgnGameDataModel> processPgnAndGetBytes(List<PGNGame> pgnGames) {
-        List<PgnGameDataModel> pgnGameDataModels = new ArrayList<>();
-        PgnGameDataModel pgnGameDataModel;
+    protected static List<GameDataModel> processPgnAndGetBytes(List<PGNGame> pgnGames,String name) {
+        List<GameDataModel> gameDataModels = new ArrayList<>();
+        GameDataModel gameDataModel;
+        for (int i = 0; i < pgnGames.size(); i++) {
+            PGNGame pgnGame = pgnGames.get(i);
+            //默认棋谱名称 ：Pgn棋局  ：{Pgn文件名称}{i}
+            name = name + i;
+            gameDataModel = new GameDataModel(processPgn(pgnGame, name), name, i);
+            gameDataModels.add(gameDataModel);
+        }
+        return gameDataModels;
+    }
+
+    protected static List<GameDataModel> processPgnAndGetBytes(List<PGNGame> pgnGames) {
+        List<GameDataModel> gameDataModels = new ArrayList<>();
+        GameDataModel gameDataModel;
         for (int i = 0; i < pgnGames.size(); i++) {
             PGNGame pgnGame = pgnGames.get(i);
             //默认棋谱名称 ：Pgn棋局 最终名称 ：{棋局名称}_i
@@ -59,10 +73,10 @@ public class PgnToCmdByte {
 
             name = name + "_" + i;
 
-            pgnGameDataModel = new PgnGameDataModel(processPgn(pgnGame, name), name, i);
-            pgnGameDataModels.add(pgnGameDataModel);
+            gameDataModel = new GameDataModel(processPgn(pgnGame, name), name, i);
+            gameDataModels.add(gameDataModel);
         }
-        return pgnGameDataModels;
+        return gameDataModels;
     }
 
     private static byte[] processPgn(PGNGame pgnGame, String name) {
@@ -153,7 +167,7 @@ public class PgnToCmdByte {
         }
         //处理命令
         String data = CmdDataOrFileProcess.processCmds(cmds, isDebug);
-        if (data == null || data.length() == 0) {
+        if (StringUtils.isEmpty(data)) {
             return null;
         }
         //插入时间 + 包长 + data

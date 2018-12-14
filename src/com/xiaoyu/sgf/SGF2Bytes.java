@@ -1,5 +1,7 @@
 package com.xiaoyu.sgf;
 
+import com.xiaoyu.common.utils.StringUtils;
+import com.xiaoyu.model.GameDataModel;
 import com.xiaoyu.sgf.base.GameTree;
 import com.xiaoyu.sgf.sgfcmdtool.SgfToCmdByte;
 import com.xiaoyu.sgf.sgftool.SGFSource;
@@ -18,28 +20,29 @@ import java.net.URL;
 public class SGF2Bytes extends SgfToCmdByte {
 
     //文件解析
-    public static byte[] parseSgf(File file) throws IOException {
+    public static GameDataModel parseSgf(File file) throws IOException {
         if (file == null || !file.exists()) {
             System.out.println("File does not exist!");
             return null;
         }
         SGFSource sgfSource = new SGFSource(file);
-        return getBytes(sgfSource);
+        return getBytes(sgfSource, StringUtils.getPathName(file.getPath()));
     }
 
+
     //Url解析
-    public static byte[] parseSgf(URL url) throws IOException{
+    public static GameDataModel parseSgf(URL url) throws IOException {
         if (url == null) {
             System.out.println("File does not exist!");
             return null;
         }
         SGFSource sgfSource = new SGFSource(url);
-        return getBytes(sgfSource);
+        return getBytes(sgfSource, StringUtils.getPathName(url.getPath()));
     }
 
     //String解析
-    public static byte[] parseSgf(String sgf){
-        if (sgf == null || sgf.length() == 0) {
+    public static GameDataModel parseSgf(String sgf) {
+        if (StringUtils.isEmpty(sgf)) {
             System.out.println("File does not exist!");
             return null;
         }
@@ -49,7 +52,7 @@ public class SGF2Bytes extends SgfToCmdByte {
 
 
     //InputStream解析
-    public static byte[] parseSgf(InputStream pgnInputStream) throws IOException{
+    public static GameDataModel parseSgf(InputStream pgnInputStream) throws IOException {
         if (pgnInputStream == null) {
             System.out.println("File does not exist!");
             return null;
@@ -58,8 +61,15 @@ public class SGF2Bytes extends SgfToCmdByte {
         return getBytes(sgfSource);
     }
 
-    private static byte[] getBytes(SGFSource sgfSource) {
+    //不使用源文件名称
+    private static GameDataModel getBytes(SGFSource sgfSource) {
         GameTree gameTree = sgfSource.getGameTree();
         return processSgfAndGetBytes(gameTree);
+    }
+
+    //使用源文件名称 子文件为源文件名称 + i
+    private static GameDataModel getBytes(SGFSource sgfSource, String name) {
+        GameTree gameTree = sgfSource.getGameTree();
+        return processSgfAndGetBytes(gameTree, name);
     }
 }
