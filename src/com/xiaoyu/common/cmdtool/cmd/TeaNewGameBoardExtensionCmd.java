@@ -2,7 +2,7 @@ package com.xiaoyu.common.cmdtool.cmd;
 
 import com.alibaba.fastjson.JSON;
 import com.xiaoyu.common.cmdtool.ActionStep;
-import com.xiaoyu.common.model.ChessType;
+import com.xiaoyu.model.ChessType;
 import com.xiaoyu.common.cmdtool.ParserManager;
 import com.xiaoyu.common.cmdtool.cmd.base.BaseRtsCmd;
 

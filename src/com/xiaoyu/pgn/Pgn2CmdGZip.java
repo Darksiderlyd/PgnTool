@@ -17,51 +17,47 @@ import java.util.List;
 public class Pgn2CmdGZip extends PgnToCmdByte {
 
     //文件解析
-    public static File parsePgn(File file, String filePath, String fileName) throws IOException, PGNParseException, MalformedMoveException {
+    public static List<File> parsePgn(File file, String filePath, String fileName) throws IOException, PGNParseException, MalformedMoveException {
         if (file == null || !file.exists()) {
             System.out.println("File does not exist!");
             return null;
         }
         PGNSource source = new PGNSource(file);
         List<PGNGame> pgnGames = source.listGames();
-        PGNGame pgnGame = pgnGames.get(0);
-        return processPgnAndGetGzFile(pgnGame, filePath, fileName);
+        return processPgnAndGetGzFile(pgnGames, filePath, fileName);
     }
 
     //Url解析
-    public static File parsePgn(URL url, String filePath, String fileName) throws IOException, PGNParseException, MalformedMoveException {
+    public static List<File> parsePgn(URL url, String filePath, String fileName) throws IOException, PGNParseException, MalformedMoveException {
         if (url == null) {
             System.out.println("File does not exist!");
             return null;
         }
         PGNSource source = new PGNSource(url);
         List<PGNGame> pgnGames = source.listGames();
-        PGNGame pgnGame = pgnGames.get(0);
-        return processPgnAndGetGzFile(pgnGame, filePath, fileName);
+        return processPgnAndGetGzFile(pgnGames, filePath, fileName);
     }
 
     //String解析
-    public static File parsePgn(String pgn, String filePath, String fileName) throws IOException, PGNParseException, MalformedMoveException {
+    public static List<File> parsePgn(String pgn, String filePath, String fileName) throws IOException, PGNParseException, MalformedMoveException {
         if (pgn == null || pgn.length() == 0) {
             System.out.println("File does not exist!");
             return null;
         }
         PGNSource source = new PGNSource(pgn);
         List<PGNGame> pgnGames = source.listGames();
-        PGNGame pgnGame = pgnGames.get(0);
-        return processPgnAndGetGzFile(pgnGame, filePath, fileName);
+        return processPgnAndGetGzFile(pgnGames, filePath, fileName);
     }
 
     //InputStream解析
-    public static File parsePgn(InputStream pgnInputStream, String filePath, String fileName) throws IOException, PGNParseException, MalformedMoveException {
+    public static List<File> parsePgn(InputStream pgnInputStream, String filePath, String fileName) throws IOException, PGNParseException, MalformedMoveException {
         if (pgnInputStream == null) {
             System.out.println("File does not exist!");
             return null;
         }
         PGNSource source = new PGNSource(pgnInputStream);
         List<PGNGame> pgnGames = source.listGames();
-        PGNGame pgnGame = pgnGames.get(0);
-        return processPgnAndGetGzFile(pgnGame, filePath, fileName);
+        return processPgnAndGetGzFile(pgnGames, filePath, fileName);
     }
 
 }

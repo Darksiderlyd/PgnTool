@@ -1,4 +1,4 @@
-package com.xiaoyu.common.model;
+package com.xiaoyu.model;
 
 import com.xiaoyu.sgf.base.Board;
 

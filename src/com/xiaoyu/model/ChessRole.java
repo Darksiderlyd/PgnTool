@@ -1,4 +1,4 @@
-package com.xiaoyu.common.model;
+package com.xiaoyu.model;
 
 import com.xiaoyu.pgn.pgntool.Color;
 import com.xiaoyu.pgn.pgntool.PGNParser;

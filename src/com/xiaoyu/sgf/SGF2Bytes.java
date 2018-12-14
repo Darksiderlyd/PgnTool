@@ -24,8 +24,7 @@ public class SGF2Bytes extends SgfToCmdByte {
             return null;
         }
         SGFSource sgfSource = new SGFSource(file);
-        GameTree gameTree = sgfSource.getGameTree();
-        return processSgfAndGetBytes(gameTree);
+        return getBytes(sgfSource);
     }
 
     //Url解析
@@ -35,20 +34,19 @@ public class SGF2Bytes extends SgfToCmdByte {
             return null;
         }
         SGFSource sgfSource = new SGFSource(url);
-        GameTree gameTree = sgfSource.getGameTree();
-        return processSgfAndGetBytes(gameTree);
+        return getBytes(sgfSource);
     }
 
     //String解析
-    public static byte[] parseSgf(String pgn){
-        if (pgn == null || pgn.length() == 0) {
+    public static byte[] parseSgf(String sgf){
+        if (sgf == null || sgf.length() == 0) {
             System.out.println("File does not exist!");
             return null;
         }
-        SGFSource sgfSource = new SGFSource(pgn);
-        GameTree gameTree = sgfSource.getGameTree();
-        return processSgfAndGetBytes(gameTree);
+        SGFSource sgfSource = new SGFSource(sgf);
+        return getBytes(sgfSource);
     }
+
 
     //InputStream解析
     public static byte[] parseSgf(InputStream pgnInputStream) throws IOException{
@@ -57,8 +55,11 @@ public class SGF2Bytes extends SgfToCmdByte {
             return null;
         }
         SGFSource sgfSource = new SGFSource(pgnInputStream);
+        return getBytes(sgfSource);
+    }
+
+    private static byte[] getBytes(SGFSource sgfSource) {
         GameTree gameTree = sgfSource.getGameTree();
         return processSgfAndGetBytes(gameTree);
     }
-
 }

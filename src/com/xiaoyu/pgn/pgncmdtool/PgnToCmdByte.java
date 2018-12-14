@@ -4,9 +4,11 @@ import com.xiaoyu.common.cmdtool.cmd.TeaMoveChessCmd;
 import com.xiaoyu.common.cmdtool.CmdDataOrFileProcess;
 import com.xiaoyu.common.cmdtool.cmd.TeaNewGameBoardExtensionCmd;
 import com.xiaoyu.common.cmdtool.cmd.base.IRtsCmd;
-import com.xiaoyu.common.model.ChessRole;
-import com.xiaoyu.common.model.ChessType;
+import com.xiaoyu.model.ChessRole;
+import com.xiaoyu.model.ChessType;
+import com.xiaoyu.model.PgnGameDataModel;
 import com.xiaoyu.pgn.pgntool.*;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -24,32 +26,53 @@ public class PgnToCmdByte {
     private static final String tag = "XYPgnToCmdByte";
 
 
-    protected static File processPgnAndGetGzFile(PGNGame pgnGame,String filePath, String fileName){
-        File gzFile = CmdDataOrFileProcess.getFile(filePath, fileName, processPgn(pgnGame),tag);
-        if (gzFile == null) return null;
-        return gzFile;
-    }
-
-    protected static byte[] processPgnAndGetBytes(PGNGame pgnGame){
-        return processPgn(pgnGame);
-    }
-
-    private static byte[] processPgn(PGNGame pgnGame) {
-        String name = "Pgn棋局";
-        List<IRtsCmd> cmds = new ArrayList<>();
-        if (isDebug) System.out.println("############################");
-        Iterator<String> tagsIterator = pgnGame.getTagKeysIterator();
-        //解析头部
-        while (tagsIterator.hasNext()) {
-            String key = tagsIterator.next();
-
-            if (key.equals("Event")) {
-                name = pgnGame.getTag(key);
-            }
-            if (isDebug) System.out.println(key + " {" + pgnGame.getTag(key) + "}");
+    protected static List<File> processPgnAndGetGzFile(List<PGNGame> pgnGames, String filePath, String fileName) {
+        List<PgnGameDataModel> pgnGameDataModels = processPgnAndGetBytes(pgnGames);
+        List<File> gzfileList = new ArrayList<>();
+        for (int i = 0; i < pgnGameDataModels.size(); i++) {
+            PgnGameDataModel pgnGameDataModel = pgnGameDataModels.get(i);
+            //{fileName}_{gameName}最终的文件名称
+            String newFileName = fileName + "_" + pgnGameDataModel.getGameName();
+            gzfileList.add(CmdDataOrFileProcess.getFile(filePath, newFileName, pgnGameDataModel.getPgnDatas(), tag));
         }
+        return gzfileList;
+    }
 
-        if (isDebug) System.out.println();
+    protected static List<PgnGameDataModel> processPgnAndGetBytes(List<PGNGame> pgnGames) {
+        List<PgnGameDataModel> pgnGameDataModels = new ArrayList<>();
+        PgnGameDataModel pgnGameDataModel;
+        for (int i = 0; i < pgnGames.size(); i++) {
+            PGNGame pgnGame = pgnGames.get(i);
+            //默认棋谱名称 ：Pgn棋局 最终名称 ：{棋局名称}_i
+            String name = "Pgn棋局";
+
+            Iterator<String> tagsIterator = pgnGame.getTagKeysIterator();
+            //解析头部
+            while (tagsIterator.hasNext()) {
+                String key = tagsIterator.next();
+                String tag = pgnGame.getTag(key);
+                if (key.equals("Event")) {
+                    name = tag.replace(" ", "");
+                }
+                if (isDebug) System.out.println(key + " {" + tag + "}");
+            }
+
+            name = name + "_" + i;
+
+            pgnGameDataModel = new PgnGameDataModel(processPgn(pgnGame, name), name, i);
+            pgnGameDataModels.add(pgnGameDataModel);
+        }
+        return pgnGameDataModels;
+    }
+
+    private static byte[] processPgn(PGNGame pgnGame, String name) {
+
+        List<IRtsCmd> cmds = new ArrayList<>();
+
+        if (isDebug) {
+            System.out.println("############################");
+            System.out.println();
+        }
 
         Iterator<PGNMove> movesIterator = pgnGame.getMovesIterator();
         int num = 1;
@@ -129,7 +152,7 @@ public class PgnToCmdByte {
             return null;
         }
         //处理命令
-        String data = CmdDataOrFileProcess.processCmds(cmds,isDebug);
+        String data = CmdDataOrFileProcess.processCmds(cmds, isDebug);
         if (data == null || data.length() == 0) {
             return null;
         }

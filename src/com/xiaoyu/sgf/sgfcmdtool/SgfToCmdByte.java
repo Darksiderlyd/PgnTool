@@ -4,8 +4,8 @@ import com.xiaoyu.common.cmdtool.CmdDataOrFileProcess;
 import com.xiaoyu.common.cmdtool.cmd.TeaMoveChessCmd;
 import com.xiaoyu.common.cmdtool.cmd.TeaNewGameBoardExtensionCmd;
 import com.xiaoyu.common.cmdtool.cmd.base.IRtsCmd;
-import com.xiaoyu.common.model.ChessRole;
-import com.xiaoyu.common.model.ChessType;
+import com.xiaoyu.model.ChessRole;
+import com.xiaoyu.model.ChessType;
 import com.xiaoyu.sgf.base.GameTree;
 import com.xiaoyu.sgf.base.Move;
 
