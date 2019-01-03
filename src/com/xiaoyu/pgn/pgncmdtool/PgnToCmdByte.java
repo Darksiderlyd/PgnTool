@@ -39,7 +39,7 @@ public class PgnToCmdByte {
         return gzfileList;
     }
 
-    protected static List<GameDataModel> processPgnAndGetBytes(List<PGNGame> pgnGames,String name) {
+    protected static List<GameDataModel> processPgnAndGetBytes(List<PGNGame> pgnGames, String name) {
         List<GameDataModel> gameDataModels = new ArrayList<>();
         GameDataModel gameDataModel;
         for (int i = 0; i < pgnGames.size(); i++) {
@@ -97,8 +97,9 @@ public class PgnToCmdByte {
             //初始化添加创建棋盘命令
             if (num == 1) {
                 TeaNewGameBoardExtensionCmd.Ext.Builder extBuild = new TeaNewGameBoardExtensionCmd.Ext.Builder();
-                TeaNewGameBoardExtensionCmd.Ext ext = extBuild.setOrder(chessColor ? 1 : 0).build();
+                TeaNewGameBoardExtensionCmd.Ext ext = extBuild.setOrder(chessColor ? 1 : 0).setLayout(0).setPgn(pgnGame.toString()).build();
                 TeaNewGameBoardExtensionCmd teaNewGameBoardExtensionCmd = new TeaNewGameBoardExtensionCmd(ChessType.Mode_Chess, name, 1, ext);
+                teaNewGameBoardExtensionCmd.toByte();
                 cmds.add(teaNewGameBoardExtensionCmd);
             }
 

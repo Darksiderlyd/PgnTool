@@ -1,13 +1,17 @@
 package com.xiaoyu;
 
 import com.xiaoyu.common.Config;
+import com.xiaoyu.model.GameDataModel;
+import com.xiaoyu.pgn.Pgn2Bytes;
+import com.xiaoyu.pgn.Pgn2CmdGZip;
 import com.xiaoyu.pgn.pgntool.MalformedMoveException;
 import com.xiaoyu.pgn.pgntool.PGNParseException;
-import com.xiaoyu.sgf.SGF2CmdGZip;
+import com.xiaoyu.pgn.pgntool.PGNParser;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 
 /**
  * PGN test 1.0.0
@@ -22,36 +26,42 @@ public class ParseTest {
      * @throws NullPointerException
      */
     public static void main(String[] args) throws IOException, PGNParseException, NullPointerException, MalformedMoveException {
-        if (args.length == 0) {
-            System.out.println("Usage:");
-            System.out.println("\tpath");
-        }
-
-//        System.out.println(ChessType.getWeiqiTypeByLineNum(Board.SIZE_9).getCode());
-
-        //###===============PGN Test===================
-//        File file = new File("/Users/yaodonglv/Desktop/XQS文档/test6.pgn");
-//        File file2 = new File("/Users/yaodonglv/Desktop/XQS文档/test.pgn");
-//        File file3 = new File("/Users/yaodonglv/Desktop/XQS文档/test9.pgn");
-//        URL url = new URL("http://127.0.0.1:8080/test.pgn");
+//        if (args.length == 0) {
+//            System.out.println("Usage:");
+//            System.out.println("\tpath");
+//        }
 //
-//        String path = url.getPath();
-//        int index1 = path.lastIndexOf("/");
-//        int index2 = path.lastIndexOf(".");
-//        String substring = path.substring(index1 + 1,index2);
+////        System.out.println(ChessType.getWeiqiTypeByLineNum(Board.SIZE_9).getCode());
 //
-//        Config.isDebug = true;
-//        List<File> files = Pgn2CmdGZip.parsePgn(file3, "/Users/yaodonglv/Desktop/XQS文档/", "pgnData");
+//        //###===============PGN Test===================
+        File file = new File("/Users/yaodonglv/Desktop/XQS文档/test6.pgn");
+        File file2 = new File("/Users/yaodonglv/Desktop/XQS文档/test.pgn");
+        File file3 = new File("/Users/yaodonglv/Desktop/XQS文档/test10.pgn");
+        URL url = new URL("http://127.0.0.1:8080/test.pgn");
 
-//        List<GameDataModel> models = Pgn2Bytes.parsePgn(file3);
+        String path = url.getPath();
+        int index1 = path.lastIndexOf("/");
+        int index2 = path.lastIndexOf(".");
+        String substring = path.substring(index1 + 1,index2);
 
+        Config.isDebug = true;
+        List<File> files = Pgn2CmdGZip.parsePgn(file3, "/Users/yaodonglv/Desktop/XQS文档/pgnData.gz", "pgnData");
+
+        List<GameDataModel> models = Pgn2Bytes.parsePgn(file3);
+
+        byte[][] defaultBoard = PGNParser.createDefaultBoard();
+        PGNParser.printBoard(defaultBoard);
+
+        byte[][] fenBoard = PGNParser.createFENBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", new int[1]);
+
+        PGNParser.printBoard(fenBoard);
 
         //###===============SGF Test===================
-        File file = new File("/Users/yaodonglv/Desktop/XQS文档/sgftest1.sgf");
-        File file2 = new File("/Users/yaodonglv/Desktop/XQS文档/sgftest2.sgf");
-        URL url = new URL("http://127.0.0.1:8080/sgftest.sgf");
-        Config.isDebug = true;
-        SGF2CmdGZip.parseSgf(file2, "/Users/yaodonglv/Desktop/XQS文档/", "sgfData");
+//        File file = new File("/Users/yaodonglv/Desktop/XQS文档/sgftest1.sgf");
+//        File file2 = new File("/Users/yaodonglv/Desktop/XQS文档/sgftest2.sgf");
+//        URL url = new URL("http://127.0.0.1:8080/sgftest.sgf");
+//        Config.isDebug = true;
+//        SGF2CmdGZip.parseSgf(file2, "/Users/yaodonglv/Desktop/XQS文档/", "sgfData");
 
 
 //        SGFSource sgfSource = new SGFSource(file);
@@ -85,6 +95,7 @@ public class ParseTest {
 //        String move2 = "BLACK A5";
 //        String move3 = "WHITE B1";
 //
+//
 //        System.out.println(game.isValidMove(move0));
 //
 //        game.play(move0);
@@ -92,23 +103,31 @@ public class ParseTest {
 //        game.play(move2);
 //        game.play(move3);
 //
+//
+//
+//        game.moveToPlay();
+
+//        GameHelper gameHelper = new GameHelperImpl();
+//        int[] chineseScore = gameHelper.getChineseScore(game);
+//        System.out.println("Empty ：" + chineseScore[Board.EMPTY] + ",Black ：" + chineseScore[Board.BLACK] + ",White ：" + chineseScore[Board.WHITE]);
+
 //        int[] array = game.getBoard().getArray();
 
         //###===============SGF Board Test===================
 //        Board board = new BoardImpl(19);
-
+//
 //        board.setP(0,Board.BLACK);
 //        board.setP(1,Board.WHITE);
 //        board.setP(360,Board.BLACK);
-
+//
 //        board.set("A1",Board.BLACK);
 //        board.set("A2",Board.WHITE);
 //        board.set("T19",Board.BLACK);
-
+//
 //        board.set(0, 0, Board.BLACK);
 //        board.set(0, 1, Board.WHITE);
 //        board.set(18, 18, Board.BLACK);
-
+//
 //        int[] array = board.getArray();
 //        int length = array.length;
 //

@@ -1,10 +1,10 @@
 package com.xiaoyu.common.cmdtool.cmd;
 
-import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import com.xiaoyu.common.cmdtool.ActionStep;
-import com.xiaoyu.model.ChessType;
 import com.xiaoyu.common.cmdtool.ParserManager;
 import com.xiaoyu.common.cmdtool.cmd.base.BaseRtsCmd;
+import com.xiaoyu.model.ChessType;
 
 import java.util.List;
 
@@ -15,10 +15,12 @@ import java.util.List;
  * 老师端新建棋局(可扩展)
  * update:新建 67号命令
  */
-public class TeaNewGameBoardExtensionCmd extends BaseRtsCmd{
+public class TeaNewGameBoardExtensionCmd extends BaseRtsCmd {
 
 
     public final ChessType type;
+
+    private final Gson gson;
 
     //新建棋局名称
 
@@ -74,6 +76,19 @@ public class TeaNewGameBoardExtensionCmd extends BaseRtsCmd{
          * 黑方头像
          */
         private String blackUrl;
+
+        /**
+         * pgn
+         */
+        private String pgn;
+
+        public String getPgn() {
+            return pgn;
+        }
+
+        public void setPgn(String pgn) {
+            this.pgn = pgn;
+        }
 
         public int getRole() {
             return role;
@@ -152,6 +167,7 @@ public class TeaNewGameBoardExtensionCmd extends BaseRtsCmd{
             private String whiteUrl;
             private String blackName;
             private String blackUrl;
+            private String pgn;
 
             public Builder setRole(int role) {
                 this.role = role;
@@ -193,6 +209,10 @@ public class TeaNewGameBoardExtensionCmd extends BaseRtsCmd{
                 return this;
             }
 
+            public Builder setPgn(String pgn) {
+                this.pgn = pgn;
+                return this;
+            }
 
             public Ext build() {
                 Ext ext = new Ext();
@@ -204,6 +224,7 @@ public class TeaNewGameBoardExtensionCmd extends BaseRtsCmd{
                 ext.blackUrl = this.blackUrl;
                 ext.whiteName = this.whiteName;
                 ext.whiteUrl = this.whiteUrl;
+                ext.pgn = this.pgn;
                 return ext;
             }
         }
@@ -214,13 +235,16 @@ public class TeaNewGameBoardExtensionCmd extends BaseRtsCmd{
         this.name = name;
         this.hasRule = hasRule;
         this.ext = ext;
+        gson = new Gson();
     }
 
 
     @Override
     public List<Byte> toByte() {
-        String s = JSON.toJSONString(this.ext);
+        String s = gson.toJson(this.ext, Ext.class);
+//        String s1 = JSON.toJSONString(this.ext);
+        System.out.println("Gson : " + s + "\n" + "FastJson : ");
+//        System.out.println("Gson : " + s + "\n" + "FastJson : " + s1);
         return ParserManager.getPkgBytes(ActionStep.TEA_NEW_GAME_BOARD_EXTENSION, this.type.getCode(), this.name, this.hasRule, s);
-
     }
 }

@@ -66,7 +66,7 @@ public class SgfToCmdByte {
 
             if (count == 1) {
                 TeaNewGameBoardExtensionCmd.Ext.Builder extBuild = new TeaNewGameBoardExtensionCmd.Ext.Builder();
-                TeaNewGameBoardExtensionCmd.Ext ext = extBuild.setOrder(move.getPlayer() == Move.WHITE ? 1 : 0).build();
+                TeaNewGameBoardExtensionCmd.Ext ext = extBuild.setOrder(move.getPlayer() == Move.WHITE ? 1 : 0).setLayout(0).build();
                 TeaNewGameBoardExtensionCmd teaNewGameBoardExtensionCmd = new TeaNewGameBoardExtensionCmd(ChessType.getWeiqiTypeByLineNum(gameTree.getBoardSize()), name, 1, ext);
                 cmds.add(teaNewGameBoardExtensionCmd);
             }
