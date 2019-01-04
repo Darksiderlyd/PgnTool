@@ -238,6 +238,7 @@ public class PGNParser {
             if (game.containsTagKey(FEN)) {
                 board = createFENBoard(game.getTag(FEN), color);
                 printBoard(board);
+                game.setFenOpen(game.getTag(FEN));
             } else {
                 if (rawMoves.length > 0) {
                     String rawMove = rawMoves[0];

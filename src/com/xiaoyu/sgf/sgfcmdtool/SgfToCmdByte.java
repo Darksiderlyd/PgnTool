@@ -28,7 +28,7 @@ public class SgfToCmdByte {
 
 
     protected static File processSgfAndGetGzFile(GameTree gameTree, String filePath, String fileName, String name) {
-        File gzFile = CmdDataOrFileProcess.getFile(filePath, fileName, processSgfAndGetBytes(gameTree,name).getPgnDatas(), tag);
+        File gzFile = CmdDataOrFileProcess.getFile(filePath, fileName, processSgfAndGetBytes(gameTree, name).getPgnDatas(), tag);
         if (gzFile == null) return null;
         return gzFile;
     }
@@ -65,8 +65,16 @@ public class SgfToCmdByte {
             Move move = gameTree.getMove();
 
             if (count == 1) {
+                String open = null;
+                if (!StringUtils.isEmpty(gameTree.getABAdd()) || !StringUtils.isEmpty(gameTree.getAWAdd())) {
+                    //只要添加黑棋和添加白棋有一个不为空就是有开始局面
+                    open = "AB[" + gameTree.getABAdd() + "]AW[" + gameTree.getAWAdd() + "]";
+                    if (isDebug) {
+                        System.out.println(open);
+                    }
+                }
                 TeaNewGameBoardExtensionCmd.Ext.Builder extBuild = new TeaNewGameBoardExtensionCmd.Ext.Builder();
-                TeaNewGameBoardExtensionCmd.Ext ext = extBuild.setOrder(move.getPlayer() == Move.WHITE ? 1 : 0).setLayout(0).build();
+                TeaNewGameBoardExtensionCmd.Ext ext = extBuild.setOrder(move.getPlayer() == Move.WHITE ? 1 : 0).setLayout(0).setOpen(open).build();
                 TeaNewGameBoardExtensionCmd teaNewGameBoardExtensionCmd = new TeaNewGameBoardExtensionCmd(ChessType.getWeiqiTypeByLineNum(gameTree.getBoardSize()), name, 1, ext);
                 cmds.add(teaNewGameBoardExtensionCmd);
             }

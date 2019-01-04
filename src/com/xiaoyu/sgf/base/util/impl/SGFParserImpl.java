@@ -165,7 +165,6 @@ public class SGFParserImpl implements SGFParser {
             System.out.println(gt.getABAdd());
         } else if ("AW".equals(cmd) || "AddWhite".equals(cmd)) {
             if (params.length() == 2) {
-                gt.setAWAdd(gt.getAWAdd() + "," + params);
                 if (gt.getAWAdd() != null) {
                     gt.setAWAdd(gt.getAWAdd() + "," + params);
                 } else {

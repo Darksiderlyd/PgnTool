@@ -97,7 +97,7 @@ public class PgnToCmdByte {
             //初始化添加创建棋盘命令
             if (num == 1) {
                 TeaNewGameBoardExtensionCmd.Ext.Builder extBuild = new TeaNewGameBoardExtensionCmd.Ext.Builder();
-                TeaNewGameBoardExtensionCmd.Ext ext = extBuild.setOrder(chessColor ? 1 : 0).setLayout(0).setPgn(pgnGame.toString()).build();
+                TeaNewGameBoardExtensionCmd.Ext ext = extBuild.setOrder(chessColor ? 1 : 0).setLayout(0).setOpen(pgnGame.getFenOpen()).build();
                 TeaNewGameBoardExtensionCmd teaNewGameBoardExtensionCmd = new TeaNewGameBoardExtensionCmd(ChessType.Mode_Chess, name, 1, ext);
                 teaNewGameBoardExtensionCmd.toByte();
                 cmds.add(teaNewGameBoardExtensionCmd);

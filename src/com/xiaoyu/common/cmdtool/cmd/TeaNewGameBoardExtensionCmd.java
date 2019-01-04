@@ -80,14 +80,14 @@ public class TeaNewGameBoardExtensionCmd extends BaseRtsCmd {
         /**
          * pgn
          */
-        private String pgn;
+        private String open;
 
-        public String getPgn() {
-            return pgn;
+        public String getOpen() {
+            return open;
         }
 
-        public void setPgn(String pgn) {
-            this.pgn = pgn;
+        public void setOpen(String open) {
+            this.open = open;
         }
 
         public int getRole() {
@@ -167,7 +167,7 @@ public class TeaNewGameBoardExtensionCmd extends BaseRtsCmd {
             private String whiteUrl;
             private String blackName;
             private String blackUrl;
-            private String pgn;
+            private String open;
 
             public Builder setRole(int role) {
                 this.role = role;
@@ -209,8 +209,8 @@ public class TeaNewGameBoardExtensionCmd extends BaseRtsCmd {
                 return this;
             }
 
-            public Builder setPgn(String pgn) {
-                this.pgn = pgn;
+            public Builder setOpen(String open) {
+                this.open = open;
                 return this;
             }
 
@@ -224,7 +224,7 @@ public class TeaNewGameBoardExtensionCmd extends BaseRtsCmd {
                 ext.blackUrl = this.blackUrl;
                 ext.whiteName = this.whiteName;
                 ext.whiteUrl = this.whiteUrl;
-                ext.pgn = this.pgn;
+                ext.open = this.open;
                 return ext;
             }
         }

@@ -14,7 +14,9 @@ public class PGNGame {
 	private List<PGNMove> moves;
 	
 	private String pgn;
-	
+
+	private String fenOpen;
+
 	PGNGame() {
 		tags = new HashMap<String, String>();
 		moves = new LinkedList<PGNMove>();
@@ -81,5 +83,12 @@ public class PGNGame {
 	public int getMovePairsCount() {
 		return moves.size() / 2;
 	}
-	
+
+	public String getFenOpen() {
+		return fenOpen;
+	}
+
+	public void setFenOpen(String fenOpen) {
+		this.fenOpen = fenOpen;
+	}
 }
