@@ -7,6 +7,12 @@ public interface GameTree {
 
 	void setWhiteName(String name);
 	String getWhiteName();
+
+	void setABAdd(String abAdd);
+	String getABAdd();
+
+	void setAWAdd(String awAdd);
+	String getAWAdd();
 	
 	void setBoardSize(int size);
 	int getBoardSize();

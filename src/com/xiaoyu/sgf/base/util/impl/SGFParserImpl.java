@@ -148,7 +148,42 @@ public class SGFParserImpl implements SGFParser {
             } else {
                 gt.setGameName(params);
             }
-        } else {
+        } else if ("AB".equals(cmd) || "AddBlack".equals(cmd)) {
+            if (params.length() == 2) {
+                if (gt.getABAdd() != null) {
+                    gt.setABAdd(gt.getABAdd() + "," + params);
+                } else {
+                    gt.setABAdd(params);
+                }
+            } else {
+                if (gt.getABAdd() != null) {
+                    gt.setABAdd(gt.getABAdd() + "," + params.replace("][", ","));
+                } else {
+                    gt.setABAdd(params.replace("][", ","));
+                }
+            }
+            System.out.println(gt.getABAdd());
+        } else if ("AW".equals(cmd) || "AddWhite".equals(cmd)) {
+            if (params.length() == 2) {
+                gt.setAWAdd(gt.getAWAdd() + "," + params);
+                if (gt.getAWAdd() != null) {
+                    gt.setAWAdd(gt.getAWAdd() + "," + params);
+                } else {
+                    gt.setAWAdd(params);
+                }
+            } else {
+                if (gt.getAWAdd() != null) {
+                    gt.setAWAdd(gt.getAWAdd() + "," + params.replace("][", ","));
+                } else {
+                    gt.setAWAdd(params.replace("][", ","));
+                }
+            }
+            System.out.println(gt.getAWAdd());
+        }
+//        else if ("AE".equals(cmd) || "AddEmpty".equals(cmd)) {
+//
+//        }
+        else {
             //System.err.println("Unrecognized SGF command: " + cmd + "["+params+"]");
         }
         return stack;
@@ -181,12 +216,18 @@ public class SGFParserImpl implements SGFParser {
                 // A command
                 int idx2 = sgf.indexOf('[', idx);
                 String cmd = sgf.substring(idx, idx2);
+
                 idx = idx2 + 1;
                 // its parameter
                 idx2 = sgf.indexOf(']', idx);
                 while (idx != idx2 - 1 && sgf.charAt(idx2 - 1) == '\\') { // allows \] in comments
                     idx2 = sgf.indexOf(']', idx2 + 1);
                 }
+
+                while (sgf.charAt(idx2 + 1) == '[') {
+                    idx2 = idx2 + 4;
+                }
+
                 String params = sgf.substring(idx, idx2);
                 idx = idx2 + 1; // ready for next command
                 // process the command
@@ -204,6 +245,7 @@ public class SGFParserImpl implements SGFParser {
     public GameTree parse(String sgf) {
         if (sgf == null) return null;
         GameTree gt = new GameTreeImpl();
+
         int lastPosParser = recursiveGreedyParser(gt, sgf, 0);
         if (sgf.length() == lastPosParser) {
             gt.rewind();

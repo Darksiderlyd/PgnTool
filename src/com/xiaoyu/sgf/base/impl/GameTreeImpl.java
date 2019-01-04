@@ -71,6 +71,8 @@ public class GameTreeImpl implements GameTree {
     int _moveno;
     String gameName;
     String gameEvent;
+    String aBAdd;
+    String aWAdd;
 
     public String getGameName() {
         return gameName;
@@ -237,4 +239,19 @@ public class GameTreeImpl implements GameTree {
             _currentNode.setComment(comment);
     }
 
+    public String getAWAdd() {
+        return aWAdd;
+    }
+
+    public void setAWAdd(String aWAdd) {
+        this.aWAdd = aWAdd;
+    }
+
+    public String getABAdd() {
+        return aBAdd;
+    }
+
+    public void setABAdd(String aBAdd) {
+        this.aBAdd = aBAdd;
+    }
 }
