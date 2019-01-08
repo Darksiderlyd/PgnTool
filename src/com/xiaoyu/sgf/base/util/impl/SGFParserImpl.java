@@ -162,7 +162,7 @@ public class SGFParserImpl implements SGFParser {
                     gt.setABAdd(params.replace("][", ","));
                 }
             }
-            System.out.println(gt.getABAdd());
+//            System.out.println(gt.getABAdd());
         } else if ("AW".equals(cmd) || "AddWhite".equals(cmd)) {
             if (params.length() == 2) {
                 if (gt.getAWAdd() != null) {
@@ -177,7 +177,7 @@ public class SGFParserImpl implements SGFParser {
                     gt.setAWAdd(params.replace("][", ","));
                 }
             }
-            System.out.println(gt.getAWAdd());
+//            System.out.println(gt.getAWAdd());
         }
 //        else if ("AE".equals(cmd) || "AddEmpty".equals(cmd)) {
 //

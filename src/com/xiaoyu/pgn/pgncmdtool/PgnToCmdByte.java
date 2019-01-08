@@ -32,9 +32,7 @@ public class PgnToCmdByte {
         List<File> gzfileList = new ArrayList<>();
         for (int i = 0; i < gameDataModels.size(); i++) {
             GameDataModel gameDataModel = gameDataModels.get(i);
-            //{fileName}_{gameName}最终的文件名称
-            String newFileName = fileName + "_" + gameDataModel.getGameName();
-            gzfileList.add(CmdDataOrFileProcess.getFile(filePath, newFileName, gameDataModel.getPgnDatas(), tag));
+            gzfileList.add(CmdDataOrFileProcess.getFile(filePath, fileName, gameDataModel.getPgnDatas(), tag));
         }
         return gzfileList;
     }
@@ -44,8 +42,6 @@ public class PgnToCmdByte {
         GameDataModel gameDataModel;
         for (int i = 0; i < pgnGames.size(); i++) {
             PGNGame pgnGame = pgnGames.get(i);
-            //默认棋谱名称 ：Pgn棋局  ：{Pgn文件名称}{i}
-            name = name + i;
             gameDataModel = new GameDataModel(processPgn(pgnGame, name), name, i);
             gameDataModels.add(gameDataModel);
         }
@@ -57,8 +53,7 @@ public class PgnToCmdByte {
         GameDataModel gameDataModel;
         for (int i = 0; i < pgnGames.size(); i++) {
             PGNGame pgnGame = pgnGames.get(i);
-            //默认棋谱名称 ：Pgn棋局 最终名称 ：{棋局名称}_i
-            String name = "Pgn棋局";
+            String name = "XqsPgn棋局";
 
             Iterator<String> tagsIterator = pgnGame.getTagKeysIterator();
             //解析头部
@@ -71,7 +66,6 @@ public class PgnToCmdByte {
                 if (isDebug) System.out.println(key + " {" + tag + "}");
             }
 
-            name = name + "_" + i;
 
             gameDataModel = new GameDataModel(processPgn(pgnGame, name), name, i);
             gameDataModels.add(gameDataModel);

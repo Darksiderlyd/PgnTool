@@ -1,6 +1,6 @@
 package com.xiaoyu.common.cmdtool.cmd;
 
-import com.google.gson.Gson;
+import com.alibaba.fastjson.JSON;
 import com.xiaoyu.common.cmdtool.ActionStep;
 import com.xiaoyu.common.cmdtool.ParserManager;
 import com.xiaoyu.common.cmdtool.cmd.base.BaseRtsCmd;
@@ -19,8 +19,6 @@ public class TeaNewGameBoardExtensionCmd extends BaseRtsCmd {
 
 
     public final ChessType type;
-
-    private final Gson gson;
 
     //新建棋局名称
 
@@ -235,16 +233,12 @@ public class TeaNewGameBoardExtensionCmd extends BaseRtsCmd {
         this.name = name;
         this.hasRule = hasRule;
         this.ext = ext;
-        gson = new Gson();
     }
 
 
     @Override
     public List<Byte> toByte() {
-        String s = gson.toJson(this.ext, Ext.class);
-//        String s1 = JSON.toJSONString(this.ext);
-        System.out.println("Gson : " + s + "\n" + "FastJson : ");
-//        System.out.println("Gson : " + s + "\n" + "FastJson : " + s1);
+        String s = JSON.toJSONString(this.ext);
         return ParserManager.getPkgBytes(ActionStep.TEA_NEW_GAME_BOARD_EXTENSION, this.type.getCode(), this.name, this.hasRule, s);
     }
 }

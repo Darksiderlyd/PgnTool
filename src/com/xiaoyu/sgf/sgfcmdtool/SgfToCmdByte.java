@@ -43,7 +43,7 @@ public class SgfToCmdByte {
     protected static GameDataModel processSgfAndGetBytes(GameTree gameTree) {
         String name = "Sgf棋局";
         String gameName = gameTree.getGameName();
-        if (StringUtils.isEmpty(gameName)) {
+        if (!StringUtils.isEmpty(gameName)) {
             name = gameName;
         }
         return new GameDataModel(processSgf(gameTree, name), name, 0);

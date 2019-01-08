@@ -44,8 +44,8 @@ public class ParseTest {
 //        String substring = path.substring(index1 + 1,index2);
 //
 //        Config.isDebug = true;
-//        List<File> files = Pgn2CmdGZip.parsePgn(file3, "/Users/yaodonglv/Desktop/XQS文档/pgnData.gz", "pgnData");
-//
+//        List<File> files = Pgn2CmdGZip.parsePgn(file3, "/Users/yaodonglv/Desktop/XQS文档/", "pgnData");
+
 //        List<GameDataModel> models = Pgn2Bytes.parsePgn(file3);
 //
 //        byte[][] defaultBoard = PGNParser.createDefaultBoard();
@@ -56,6 +56,21 @@ public class ParseTest {
 //        PGNParser.printBoard(fenBoard);
 
         //###===============SGF Test===================
+
+//        String weiqiOpen = "AB[er,eq,ep,dp,br,cr]AW[bq,bo,cp,do,eo,fo,fp,fq,fr,hr]";
+//
+//        String replace = weiqiOpen.replace("]AW[", "|").replace("AB[","").replace("]","");
+//
+//        System.out.println(replace);
+//        String[] split = replace.split("\\|");
+//
+//
+//
+//        System.out.println(split[0]);
+//        System.out.println();
+//        System.out.println(split[1]);
+//        System.out.println();
+//
         File file = new File("/Users/yaodonglv/Desktop/XQS文档/sgftest1.sgf");
         File file2 = new File("/Users/yaodonglv/Desktop/XQS文档/sgftest2.sgf");
         File file3 = new File("/Users/yaodonglv/Desktop/XQS文档/0001.sgf");
@@ -65,7 +80,6 @@ public class ParseTest {
 
 
         SGFSource sgfSource = new SGFSource(file);
-
         GameTree gameTree = sgfSource.getGameTree();
 
         while (!gameTree.last()) {
@@ -73,10 +87,20 @@ public class ParseTest {
             Move move = gameTree.getMove();
             System.out.println((move.getPlayer() == Move.BLACK ? "黑" : "白") + " (X,Y): " + "(" + move.getX() + "," + move.getY() + ")");
         }
-        gameTree.rewind();
-        String source = sgfSource.getSourceFromGameTree(gameTree);
-        System.out.println(source);
 
+//        for (int i = 0; i < length; i++) {
+//            if ((i+1) % 19 == 0) {
+//                System.out.println(array[i] + "");
+//            } else {
+//                System.out.print(array[i] + "");
+//            }
+//        }
+
+
+//        gameTree.rewind();
+//        String source = sgfSource.getSourceFromGameTree(gameTree);
+//        System.out.println(source);
+//
 //        String replace = "cr".replace("][", ",");
 //        System.out.println(replace);
 
